@@ -59,8 +59,12 @@ module.exports = class {
               return;
             }
 
-            total_bytes = reply.readUInt32LE(8) - 4;
-            total_bytes += 2;
+            try {
+              total_bytes = reply.readUInt32LE(8) - 4;
+              total_bytes += 2;
+            } catch (error) {
+              total_bytes = 0
+            }
 
             if (total_bytes <= 0) {
               internalCallback(new Error('zero'));
